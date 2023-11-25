@@ -1,6 +1,7 @@
 package not.beat.cat.backend.controller;
 
 import not.beat.cat.backend.dto.DocumentTo;
+import not.beat.cat.backend.dto.FormCreateRequest;
 import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.exception.ResourceNotFoundException;
 import not.beat.cat.backend.model.Form;
@@ -46,8 +47,8 @@ public class FormController {
     }
 
     @PostMapping
-    public Long save(@RequestBody FormTo formTo) {
-        return formService.save(formTransformer.transform(formTo)).getId();
+    public Long save(@RequestBody FormCreateRequest createRequest) {
+        return formService.save(formTransformer.transform(createRequest)).getId();
     }
 
     @GetMapping("/{id}/documents")
