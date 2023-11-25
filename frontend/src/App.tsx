@@ -8,177 +8,54 @@ import {
   gradient, // Градиент
 } from '@salutejs/plasma-tokens';
 import { IconBankCard, IconDevice, IconDownload, IconEvent, IconFolder, IconInfo, IconPersone } from '@salutejs/plasma-icons';
+import ApplicationCard from './components/ApplicationCard';
+import { Application } from './model/Application';
 
 
-function App() {
-  return (
-    <>
-        
+type State = {
+  applications: Application[]
+}
+
+class App extends React.Component<{}, State> {
+  public constructor(props: {}){
+    super(props)
+    this.state = {
+      applications: [{}, {}, {}]
+    }
+
+  }
+
+  private requestApplications(){
+
+  }
+
+  public render() {
+    return (
+      <>
         <Headline1 style={{
-            paddingLeft: 20,
-            paddingTop: 20,
-            paddingBottom: 20,
-            fontSize: "2rem",
-            color: "black",
-            background: 'lightgreen'
+          paddingLeft: 20,
+          paddingTop: 20,
+          paddingBottom: 20,
+          fontSize: "2rem",
+          color: "black",
+          background: 'lightgreen'
         }}>
           <DsplL>Sber помощник</DsplL>
         </Headline1>
-          <Container>
+        <Container>
           <Col style={{
             alignSelf: 'center',
             width: "50%"
           }}>
-            <Row>
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №12415</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5 }}>Ожидает обработки</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 20.10.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>
-            </Row>
-            <Row>
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №66415</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5 }}>Ожидает обработки</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 10.11.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>                 
-            </Row>
-            <Row>
-                  
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №432415</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5, color: 'orange' }}>На уточнении</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 20.10.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>      
-            </Row>
-            <Row>
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №5315</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5, color: 'orange' }}>На уточнении</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 22.10.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>                 
-            </Row>
-            <Row>
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №5315</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5, color: 'orange' }}>На уточнении</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 22.10.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>                 
-            </Row>
-            <Row>
-            <Card style={{ width: '100%', marginLeft: '0.75rem', marginTop: "1rem"}}>
-                <CardContent compact>
-                    <Cell
-                        content={<TextBoxBigTitle>Заявка №5315</TextBoxBigTitle>  as (ReactElement & string)}
-                        contentRight={<span style={{ marginTop: 5, color: 'orange' }}>На уточнении</span>}
-                    />
-                    <CellListItem
-                        contentLeft={
-                            <CellIcon>
-                                <IconInfo />
-                            </CellIcon>
-                        }
-                        content={
-                            <TextBox>
-                                <TextBoxTitle>Потребительнский кредит</TextBoxTitle>
-                                <TextBoxSubTitle>Заявлен 22.10.2023</TextBoxSubTitle>
-                            </TextBox>  as (ReactElement & string)
-                        }
-                        contentRight={<CellDisclosure />}
-                    />
-                </CardContent>
-            </Card>                 
-            </Row>
+            {
+              this.state.applications.map(application => <ApplicationCard number="123" status="Ожидает обработки" product="Потребительский кредит" date="05.10.22" />)
+            }
           </Col>
-        </Container>    
-    </>
-  );
+        </Container>
+      </>
+    );
+  }
 }
 
 export default App;
- 
+
