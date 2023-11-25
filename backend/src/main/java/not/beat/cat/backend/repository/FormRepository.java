@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface FormRepository extends JpaRepository<Form, Long> {
     List<Form> findAll();
+
+    Form save(Form form);
 }

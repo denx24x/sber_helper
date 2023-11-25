@@ -19,4 +19,9 @@ public class FormServiceImpl implements FormService {
     public List<Form> findAll() {
         return formRepository.findAll();
     }
+
+    @Override
+    public Form save(Form form) {
+        return formRepository.save(form);
+    }
 }

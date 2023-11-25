@@ -7,8 +7,5 @@ target/
 *.iml
 *.ipr
 
-### Maven ###
-.mvn/
-
 ### Credentials ###
 ./db.env

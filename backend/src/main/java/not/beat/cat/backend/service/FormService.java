@@ -8,4 +8,6 @@ import java.util.List;
 public interface FormService {
 
     List<Form> findAll();
+
+    Form save(Form form);
 }
