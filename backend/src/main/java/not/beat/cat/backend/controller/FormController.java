@@ -75,7 +75,10 @@ public class FormController {
             throw new BadParametersException(bindingResult);
         }
 
-        return formService.saveBankAccountInfo(bankAccountInfoTransformer.transform(createRequest)).getId();
+        return formService.saveBankAccountInfo(
+                createRequest.getFormId(),
+                bankAccountInfoTransformer.transform(createRequest)
+        ).getId();
     }
 
     @GetMapping("/{id}/documents")

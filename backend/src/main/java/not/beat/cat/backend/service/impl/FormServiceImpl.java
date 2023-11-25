@@ -1,5 +1,6 @@
 package not.beat.cat.backend.service.impl;
 
+import not.beat.cat.backend.exception.ResourceNotFoundException;
 import not.beat.cat.backend.model.BankAccountInfo;
 import not.beat.cat.backend.model.Form;
 import not.beat.cat.backend.repository.BankAccountInfoRepository;
@@ -39,7 +40,12 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public BankAccountInfo saveBankAccountInfo(BankAccountInfo bankAccountInfo) {
+    public BankAccountInfo saveBankAccountInfo(long id, BankAccountInfo bankAccountInfo) {
+        Form form = formRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        form.setBankAccountInfo(bankAccountInfo);
+        bankAccountInfo.setForm(form);
+
         return bankAccountInfoRepository.save(bankAccountInfo);
     }
 }

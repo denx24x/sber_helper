@@ -13,5 +13,5 @@ public interface FormService {
 
     Form save(Form form);
 
-    BankAccountInfo saveBankAccountInfo(BankAccountInfo bankAccountInfo);
+    BankAccountInfo saveBankAccountInfo(long id, BankAccountInfo bankAccountInfo);
 }
