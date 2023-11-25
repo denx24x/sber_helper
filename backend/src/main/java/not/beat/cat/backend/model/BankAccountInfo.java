@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class BankAccountInfo {
     @Id
     @Column(name = "bank_account_id")
-    private long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "form_id")

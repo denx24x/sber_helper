@@ -22,7 +22,7 @@ public class Application {
     @Id
     @GeneratedValue
     @Column(name = "application_id")
-    private long id;
+    private Long id;
 
     @Column(name = "amount")
     private BigDecimal amount;
