@@ -3,8 +3,10 @@ import { lightSber } from '@salutejs/plasma-tokens/themes'; // Или один �
 import {
     text, // Цвет текста
     background, // Цвет подложки
-    gradient, // Градиент
+    gradient,
+    gradientDevice, // Градиент
 } from '@salutejs/plasma-tokens';
+import { skeletonGradient } from '@salutejs/plasma-tokens/colors/values';
 
 const DocumentStyle = createGlobalStyle`
     html:root {
