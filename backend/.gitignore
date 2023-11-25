@@ -9,3 +9,6 @@ target/
 
 ### Maven ###
 .mvn/
+
+### Credentials ###
+./db.env
