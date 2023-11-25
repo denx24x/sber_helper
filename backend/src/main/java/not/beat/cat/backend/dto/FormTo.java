@@ -1,8 +1,7 @@
 package not.beat.cat.backend.dto;
 
 import lombok.Data;
-import not.beat.cat.backend.model.BankAccountInfo;
-import not.beat.cat.backend.model.FormStatus;
+import not.beat.cat.backend.model.ApplicationStatus;
 import not.beat.cat.backend.model.MaritalStatus;
 
 import java.math.BigDecimal;
@@ -12,7 +11,6 @@ import java.time.LocalDate;
 @Data
 public class FormTo {
     private final Long id;
-    private final FormStatus status;
     private final String fullName;
     private final LocalDate birthday;
     private final String passportData;

@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -24,11 +23,8 @@ import java.util.List;
 public class Form {
     @Id
     @GeneratedValue
+    @Column(name = "form_id")
     private long id;
-
-    @Enumerated
-    @Column(name = "status")
-    private FormStatus status;
 
     @Column(name = "full_name")
     private String fullName;
@@ -39,7 +35,7 @@ public class Form {
     @Column(name = "passport_data")
     private String passportData;
 
-    @OneToMany(mappedBy = "formId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "form", fetch = FetchType.LAZY)
     private List<Document> documents;
 
     @Column(name = "registration_address")
@@ -73,6 +69,6 @@ public class Form {
     @Column(name = "source_additional_salary")
     private String sourceAdditionalSalary;
 
-    @OneToOne(mappedBy = "form", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "form", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private BankAccountInfo bankAccountInfo;
 }

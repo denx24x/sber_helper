@@ -16,12 +16,11 @@ import java.math.BigDecimal;
 @Table(name = "bank_accounts")
 public class BankAccountInfo {
     @Id
-    @Column(name = "form_id")
-    private long formId;
+    @Column(name = "bank_account_id")
+    private long id;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "form_id")
     private Form form;
 
     @Column(name = "amount")
