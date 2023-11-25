@@ -5,45 +5,38 @@ import { ReactElement } from "react"
 import "./ApplicationCard.css"
 import React from "react"
 import { Application } from "../model/Application"
+import { NavigateFunction, Navigation, redirect, useNavigate, useNavigation } from "react-router-dom"
 
 export type ApplicationCardProps = {
     application: Application
 }
 
-type State = {
-
+type Props = {
+    navigate: NavigateFunction
+    application: Application
 }
 
-class ApplicationCard extends React.Component<ApplicationCardProps, State> {
-    public constructor(props: ApplicationCardProps) {
-        super(props);
-        this.state = {}
-    }
-
-    private openApplication = () => {
-        
-    }
-
-    public render() {
-        return (
+function ApplicationCard(props : Props) {
+    
+    return (
             <>
-                <Button className="card" stretch view="clear" onClick={() => this.openApplication()}>
+                <Button className="card" stretch view="clear" onClick={() => props.navigate("/application/" + props.application.id.toString())}>
                     <Card style={{ width: "100%" }} >
                         <CardContent compact>
                             <Cell
-                                content={<TextBoxBigTitle>Заявка №{this.props.application.id.toString()}</TextBoxBigTitle> as (ReactElement & string)}
-                                contentRight={<span style={{ marginTop: 5 }}>{this.props.application.status}</span>}
-                            />
+                                content={<TextBoxBigTitle>Заявка №{props.application.id.toString()}</TextBoxBigTitle> as (ReactElement & string)}
+                                contentRight={<span style={{ marginTop: 5 }}>{props.application.status}</span>}
+                            />  
                             <CellListItem
                                 contentLeft={
                                     <CellIcon>
-                                        <IconInfo />
+                                            <IconInfo />
                                     </CellIcon>
                                 }
                                 content={
                                     <TextBox>
-                                        <TextBoxTitle>{this.props.application.product}</TextBoxTitle>
-                                        <TextBoxSubTitle>Заявлен {this.props.application.creation_date.toString()}</TextBoxSubTitle>
+                                        <TextBoxTitle>{props.application.product}</TextBoxTitle>
+                                        <TextBoxSubTitle>Заявлен {props.application.creation_date.toString()}</TextBoxSubTitle>
                                     </TextBox> as (ReactElement & string)
                                 }
                                 contentRight={<CellDisclosure />}
@@ -54,6 +47,5 @@ class ApplicationCard extends React.Component<ApplicationCardProps, State> {
             </>
         )
     }
-}
 
 export default ApplicationCard
