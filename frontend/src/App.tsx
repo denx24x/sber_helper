@@ -9,7 +9,7 @@ import {
 } from '@salutejs/plasma-tokens';
 import { IconBankCard, IconDevice, IconDownload, IconEvent, IconFolder, IconInfo, IconPersone } from '@salutejs/plasma-icons';
 import ApplicationCard from './components/ApplicationCard';
-import { Application } from './model/Application';
+import { Application, Status } from './model/Application';
 
 
 type State = {
@@ -20,7 +20,15 @@ class App extends React.Component<{}, State> {
   public constructor(props: {}){
     super(props)
     this.state = {
-      applications: [{}, {}, {}]
+      applications: [{
+        id: 0,
+        product: "Потребительский кредит",
+        amount: 1000,
+        term_months: 10,
+        interest: 5, 
+        creation_date: new Date(Date.now()),
+        status: Status.NEW
+      }]
     }
 
   }
@@ -29,7 +37,7 @@ class App extends React.Component<{}, State> {
 
   }
 
-  public render() {
+  public render() : ReactNode {
     return (
       <>
         <Headline1 style={{
@@ -48,12 +56,12 @@ class App extends React.Component<{}, State> {
             width: "50%"
           }}>
             {
-              this.state.applications.map(application => <ApplicationCard number="123" status="Ожидает обработки" product="Потребительский кредит" date="05.10.22" />)
+              this.state.applications.map(application => <ApplicationCard number={application.id.toString()} status={application.status.toString()} product={application.product} date={application.creation_date.toUTCString()} />)
             }
           </Col>
         </Container>
       </>
-    );
+    ) as ReactNode;
   }
 }
 
