@@ -42,8 +42,10 @@ public class Application {
     private ApplicationStatus status;
 
     @OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
-    @Column(name = "forms")
     private List<Form> forms;
+
+    @OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
+    private List<Comment> comments;
 
     @CreationTimestamp
     @Column(name = "creation_date")
@@ -52,4 +54,8 @@ public class Application {
     @UpdateTimestamp
     @Column(name = "update_date")
     private LocalDateTime updateDate;
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 }

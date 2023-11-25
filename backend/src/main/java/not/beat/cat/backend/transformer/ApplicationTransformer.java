@@ -8,22 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationTransformer {
-
-    public Application transform(ApplicationTo applicationTo) {
-        Application application = new Application();
-        application.setId(applicationTo.getId());
-        application.setAmount(applicationTo.getAmount());
-        application.setTermMonths(applicationTo.getTermMonths());
-        application.setInterest(applicationTo.getInterest());
-        application.setProduct(applicationTo.getProduct());
-        application.setCreationDate(applicationTo.getCreationDate());
-        application.setStatus(applicationTo.getStatus());
-        application.setCreationDate(applicationTo.getCreationDate());
-        application.setUpdateDate(applicationTo.getUpdateDate());
-
-        return application;
-    }
-
     public Application transform(ApplicationCreateRequest createRequest) {
         Application application = new Application();
         application.setAmount(createRequest.getAmount());
