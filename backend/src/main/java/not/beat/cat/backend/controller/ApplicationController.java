@@ -1,7 +1,10 @@
 package not.beat.cat.backend.controller;
 
+import jakarta.validation.Valid;
+import not.beat.cat.backend.dto.ApplicationCreateRequest;
 import not.beat.cat.backend.dto.ApplicationTo;
 import not.beat.cat.backend.dto.FormTo;
+import not.beat.cat.backend.exception.BadParametersException;
 import not.beat.cat.backend.exception.ResourceNotFoundException;
 import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
@@ -9,6 +12,7 @@ import not.beat.cat.backend.service.ApplicationService;
 import not.beat.cat.backend.service.FormService;
 import not.beat.cat.backend.transformer.ApplicationTransformer;
 import not.beat.cat.backend.transformer.FormTransformer;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,10 +69,15 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public Long save(@RequestBody ApplicationTo applicationTo) {
-        return applicationService.save(applicationTransformer.transform(
-                applicationTo
-        )).getId();
+    public Long save(
+            @Valid @RequestBody ApplicationCreateRequest createRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new BadParametersException(bindingResult);
+        }
+
+        return applicationService.save(applicationTransformer.transform(createRequest)).getId();
     }
 
     @GetMapping("/{id}/forms")

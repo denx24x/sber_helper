@@ -10,9 +10,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -36,10 +37,6 @@ public class Application {
     @Column(name = "product")
     private String product;
 
-    @CreationTimestamp
-    @Column(name = "creation_date")
-    private LocalDate creationDate;
-
     @Enumerated
     @Column(name = "status")
     private ApplicationStatus status;
@@ -47,4 +44,12 @@ public class Application {
     @OneToMany(mappedBy = "application", fetch = FetchType.LAZY)
     @Column(name = "forms")
     private List<Form> forms;
+
+    @CreationTimestamp
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @UpdateTimestamp
+    @Column(name = "update_date")
+    private LocalDateTime updateDate;
 }

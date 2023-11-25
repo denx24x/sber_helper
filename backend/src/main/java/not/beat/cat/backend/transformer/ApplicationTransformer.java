@@ -1,21 +1,10 @@
 package not.beat.cat.backend.transformer;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import not.beat.cat.backend.dto.ApplicationCreateRequest;
 import not.beat.cat.backend.dto.ApplicationTo;
 import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
-import not.beat.cat.backend.model.Form;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class ApplicationTransformer {
@@ -29,6 +18,19 @@ public class ApplicationTransformer {
         application.setProduct(applicationTo.getProduct());
         application.setCreationDate(applicationTo.getCreationDate());
         application.setStatus(applicationTo.getStatus());
+        application.setCreationDate(applicationTo.getCreationDate());
+        application.setUpdateDate(applicationTo.getUpdateDate());
+
+        return application;
+    }
+
+    public Application transform(ApplicationCreateRequest createRequest) {
+        Application application = new Application();
+        application.setAmount(createRequest.getAmount());
+        application.setTermMonths(createRequest.getTermMonths());
+        application.setInterest(createRequest.getInterest());
+        application.setProduct(createRequest.getProduct());
+        application.setStatus(ApplicationStatus.NEW);
 
         return application;
     }
@@ -40,8 +42,9 @@ public class ApplicationTransformer {
                 application.getTermMonths(),
                 application.getInterest(),
                 application.getProduct(),
+                application.getStatus(),
                 application.getCreationDate(),
-                application.getStatus()
+                application.getUpdateDate()
         );
     }
 }
