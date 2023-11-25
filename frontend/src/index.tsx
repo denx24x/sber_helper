@@ -1,13 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import { DeviceThemeProvider, SSRProvider } from '@salutejs/plasma-ui';
+import { GlobalStyle } from './GlobalStyle';
+import App from './App'
+import * as ReactDOM from 'react-dom';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+
+ReactDOM.render(
+    <DeviceThemeProvider>
+        <SSRProvider>
+            <App />
+            <GlobalStyle />
+        </SSRProvider>
+    </DeviceThemeProvider>,
+    document.getElementById('root'),
 );
