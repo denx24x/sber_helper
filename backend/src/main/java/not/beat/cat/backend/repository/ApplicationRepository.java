@@ -1,7 +1,7 @@
 package not.beat.cat.backend.repository;
 
+import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
-import not.beat.cat.backend.model.Form;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public interface FormRepository extends JpaRepository<Form, Long> {
+public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
-    @Query("SELECT form FROM Form form WHERE form.application.id = :applicationId")
-    List<Form> findAllByApplicationId(@Param("applicationId") long applicationId);
+    @Query("SELECT app FROM Application app WHERE app.status in (:statuses)")
+    List<Application> findAllByStatuses(@Param("statuses") Set<ApplicationStatus> statuses);
 }

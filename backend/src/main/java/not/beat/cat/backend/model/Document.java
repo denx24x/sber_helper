@@ -16,7 +16,7 @@ import lombok.Data;
 public class Document {
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "form_id")

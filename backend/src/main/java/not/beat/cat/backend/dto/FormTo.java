@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Data
 public class FormTo {
     private final Long id;
+    private final Long applicationId;
     private final String fullName;
     private final LocalDate birthday;
     private final String passportData;

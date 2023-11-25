@@ -11,7 +11,7 @@ public class BankAccountTransformer {
 
     public BankAccountInfo transform(BankAccountInfoTo bankAccountInfoTo) {
         BankAccountInfo bankAccountInfo = new BankAccountInfo();
-        bankAccountInfo.setFormId(bankAccountInfo.getFormId());
+        bankAccountInfo.setId(bankAccountInfo.getId());
         bankAccountInfo.setAmount(bankAccountInfo.getAmount());
         bankAccountInfo.setCategory(bankAccountInfo.getCategory());
 
@@ -20,7 +20,7 @@ public class BankAccountTransformer {
 
     public BankAccountInfoTo transform(BankAccountInfo bankAccountInfo) {
         return new BankAccountInfoTo(
-                bankAccountInfo.getFormId(),
+                bankAccountInfo.getId(),
                 bankAccountInfo.getAmount(),
                 bankAccountInfo.getCategory()
         );
