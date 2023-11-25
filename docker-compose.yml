@@ -9,16 +9,14 @@ services:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
-#  backend:
-#    depends_on:
-#      - db
-#    env_file:
-#      - ./backend/db.env
-#    ports:
-#      - '8080:8080'
-#    build: ./backend
-
-
+  backend:
+    depends_on:
+      - db
+    env_file:
+      - ./backend/db.env
+    ports:
+      - '8080:8080'
+    build: ./backend
 volumes:
   db:
     driver: local

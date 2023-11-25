@@ -1,0 +1,14 @@
+.headerText{
+    left: 0;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .header {
+    width: 100%;
+    background-color: lightgreen;
+  }
+  
+  .cell {
+    width: 30rem;
+  }
