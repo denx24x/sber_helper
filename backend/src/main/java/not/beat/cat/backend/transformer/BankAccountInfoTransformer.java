@@ -1,19 +1,28 @@
 package not.beat.cat.backend.transformer;
 
+import not.beat.cat.backend.dto.BankAccountInfoCreateRequest;
 import not.beat.cat.backend.dto.BankAccountInfoTo;
 import not.beat.cat.backend.model.BankAccountInfo;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
-public class BankAccountTransformer {
+public class BankAccountInfoTransformer {
 
     public BankAccountInfo transform(BankAccountInfoTo bankAccountInfoTo) {
         BankAccountInfo bankAccountInfo = new BankAccountInfo();
         bankAccountInfo.setId(bankAccountInfo.getId());
         bankAccountInfo.setAmount(bankAccountInfo.getAmount());
         bankAccountInfo.setCategory(bankAccountInfo.getCategory());
+        bankAccountInfo.setCreationDate(bankAccountInfoTo.getCreationDate());
+        bankAccountInfo.setUpdateDate(bankAccountInfoTo.getUpdateDate());
+
+        return bankAccountInfo;
+    }
+
+    public BankAccountInfo transform(BankAccountInfoCreateRequest createRequest) {
+        BankAccountInfo bankAccountInfo = new BankAccountInfo();
+        bankAccountInfo.setAmount(createRequest.getAmount());
+        bankAccountInfo.setCategory(createRequest.getCategory());
 
         return bankAccountInfo;
     }
@@ -22,7 +31,9 @@ public class BankAccountTransformer {
         return new BankAccountInfoTo(
                 bankAccountInfo.getId(),
                 bankAccountInfo.getAmount(),
-                bankAccountInfo.getCategory()
+                bankAccountInfo.getCategory(),
+                bankAccountInfo.getCreationDate(),
+                bankAccountInfo.getUpdateDate()
         );
     }
 }

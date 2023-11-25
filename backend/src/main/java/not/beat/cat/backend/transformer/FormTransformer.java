@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FormTransformer {
-    private final BankAccountTransformer bankAccountTransformer;
+    private final BankAccountInfoTransformer bankAccountInfoTransformer;
 
-    public FormTransformer(BankAccountTransformer bankAccountTransformer) {
-        this.bankAccountTransformer = bankAccountTransformer;
+    public FormTransformer(BankAccountInfoTransformer bankAccountInfoTransformer) {
+        this.bankAccountInfoTransformer = bankAccountInfoTransformer;
     }
 
     public Form transform(FormTo formTo) {
@@ -29,7 +29,7 @@ public class FormTransformer {
         form.setSalary(formTo.getSalary());
         form.setAdditionalSalary(formTo.getAdditionalSalary());
         form.setSourceAdditionalSalary(formTo.getSourceAdditionalSalary());
-        form.setBankAccountInfo(bankAccountTransformer.transform(
+        form.setBankAccountInfo(bankAccountInfoTransformer.transform(
                 formTo.getBankAccountInfo()
         ));
         form.setCreationDate(formTo.getCreationDate());
@@ -74,7 +74,7 @@ public class FormTransformer {
                 form.getSalary(),
                 form.getAdditionalSalary(),
                 form.getSourceAdditionalSalary(),
-                bankAccountTransformer.transform(form.getBankAccountInfo()),
+                bankAccountInfoTransformer.transform(form.getBankAccountInfo()),
                 form.getCreationDate(),
                 form.getUpdateDate()
         );
