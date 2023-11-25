@@ -1,0 +1,9 @@
+.card {
+    width: '100%';
+    margin-left: '0.75rem';
+    padding-top: "20rem";
+}
+
+.card:hover {
+    opacity: 0.75;
+ }

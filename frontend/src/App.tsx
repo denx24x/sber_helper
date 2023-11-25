@@ -1,8 +1,8 @@
 import React, { JSXElementConstructor, ReactElement, ReactNode } from 'react';
 import './App.css';
 
-import { Button, Card, CardContent, Cell, CellDisclosure, CellIcon, CellListItem, Col, Container, DsplL, Header, HeaderRoot, Headline1, LineSkeleton, RectSkeleton, Row, TextBox, TextBoxBigTitle, TextBoxSubTitle, TextBoxTitle } from '@salutejs/plasma-ui';
-import { background } from '@salutejs/plasma-tokens';
+import { Button, Card, CardContent, Cell, CellDisclosure, CellIcon, CellListItem, Col, Container, DsplL, Header, HeaderRoot, Headline1, LineSkeleton, RectSkeleton, Row, TextBox, TextBoxBigTitle, TextBoxSubTitle, TextBoxTitle, TextL } from '@salutejs/plasma-ui';
+import { background, voicePhraseGradient } from '@salutejs/plasma-tokens';
 import {
   text, // Цвет текста
   gradient, // Градиент
@@ -28,12 +28,30 @@ class App extends React.Component<{}, State> {
         interest: 5, 
         creation_date: new Date(Date.now()),
         status: Status.NEW
+      },
+      {
+        id: 0,
+        product: "Потребительский кредит",
+        amount: 1000,
+        term_months: 10,
+        interest: 5, 
+        creation_date: new Date(Date.now()),
+        status: Status.NEW
+      },
+      {
+        id: 0,
+        product: "Потребительский кредит",
+        amount: 1000,
+        term_months: 10,
+        interest: 5, 
+        creation_date: new Date(Date.now()),
+        status: Status.NEW
       }]
     }
 
   }
 
-  private requestApplications(){
+  private requestApplications = () => {
 
   }
 
@@ -41,14 +59,16 @@ class App extends React.Component<{}, State> {
     return (
       <>
         <Headline1 style={{
-          paddingLeft: 20,
+          paddingLeft: 40,
           paddingTop: 20,
           paddingBottom: 20,
+          borderRadius: 20,
           fontSize: "2rem",
-          color: "black",
-          background: 'lightgreen'
+          color: "white",
+          opacity: 0.7,
+          backgroundImage: voicePhraseGradient
         }}>
-          <DsplL>Sber помощник</DsplL>
+          <TextL>СБЕР помощник</TextL>
         </Headline1>
         <Container>
           <Col style={{
@@ -56,7 +76,11 @@ class App extends React.Component<{}, State> {
             width: "50%"
           }}>
             {
-              this.state.applications.map(application => <ApplicationCard number={application.id.toString()} status={application.status.toString()} product={application.product} date={application.creation_date.toUTCString()} />)
+              this.state.applications.map(application => 
+                  <Row style={{paddingTop: "6rem"}}>
+                    <ApplicationCard application={application} />
+                  </Row>
+                 )
             }
           </Col>
         </Container>
