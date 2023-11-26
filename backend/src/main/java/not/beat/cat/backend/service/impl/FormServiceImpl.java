@@ -43,7 +43,6 @@ public class FormServiceImpl implements FormService {
     public Form save(long applicationId, Form form) {
         Application application = applicationService.findById(applicationId)
                 .orElseThrow(ResourceNotFoundException::new);
-        application.addForm(form);
         form.setApplication(application);
 
         return formRepository.save(form);
@@ -53,7 +52,6 @@ public class FormServiceImpl implements FormService {
     public BankAccountInfo saveBankAccountInfo(long id, BankAccountInfo bankAccountInfo) {
         Form form = formRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
-        form.setBankAccountInfo(bankAccountInfo);
         bankAccountInfo.setForm(form);
 
         return bankAccountInfoRepository.save(bankAccountInfo);

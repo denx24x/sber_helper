@@ -54,7 +54,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Comment saveComment(long id, Comment comment) {
         Application application = findById(id).orElseThrow(ResourceNotFoundException::new);
-        application.addComment(comment);
         comment.setApplication(application);
 
         return commentService.save(comment);
@@ -66,10 +65,8 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = applicationRepository.findById(id)
                 .orElseThrow(ResourceNotFoundException::new);
         application.setStatus(newStatus);
-        application.addComment(comment);
         comment.setApplication(application);
 
-        applicationRepository.save(application);
         commentRepository.save(comment);
     }
 }

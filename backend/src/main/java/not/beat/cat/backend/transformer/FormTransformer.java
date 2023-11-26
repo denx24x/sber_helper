@@ -49,7 +49,9 @@ public class FormTransformer {
                 form.getSalary(),
                 form.getAdditionalSalary(),
                 form.getSourceAdditionalSalary(),
-                bankAccountInfoTransformer.transform(form.getBankAccountInfo()),
+                form.getBankAccountInfo() == null
+                        ? null
+                        : bankAccountInfoTransformer.transform(form.getBankAccountInfo()),
                 form.getCreationDate(),
                 form.getUpdateDate()
         );
