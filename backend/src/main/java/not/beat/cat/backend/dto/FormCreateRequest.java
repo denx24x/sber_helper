@@ -9,7 +9,6 @@ import lombok.Data;
 import not.beat.cat.backend.model.MaritalStatus;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
 
 @Data
@@ -41,8 +40,8 @@ public class FormCreateRequest {
     @NotBlank
     private final String workPlace;
 
-    @NotNull
-    private final Duration workingExperience;
+    @Min(0)
+    private final Integer workingExperienceInMonths;
 
     @NotBlank
     private final String workPosition;
