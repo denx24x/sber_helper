@@ -5,9 +5,6 @@ import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.model.Form;
 import org.springframework.stereotype.Component;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-
 @Component
 public class FormTransformer {
     private final BankAccountInfoTransformer bankAccountInfoTransformer;
@@ -26,7 +23,7 @@ public class FormTransformer {
         form.setMaterialStatus(createRequest.getMaterialStatus());
         form.setHasChildren(createRequest.getHasChildren());
         form.setWorkPlace(createRequest.getWorkPlace());
-        form.setWorkingExperience(Duration.of(createRequest.getWorkingExperienceInMonths(), ChronoUnit.MONTHS));
+        form.setWorkingExperienceInMonth(createRequest.getWorkingExperienceInMonths());
         form.setWorkPosition(createRequest.getWorkPosition());
         form.setSalary(createRequest.getSalary());
         form.setAdditionalSalary(createRequest.getAdditionalSalary());
@@ -47,7 +44,7 @@ public class FormTransformer {
                 form.getMaterialStatus(),
                 form.isHasChildren(),
                 form.getWorkPlace(),
-                (int) form.getWorkingExperience().get(ChronoUnit.MONTHS),
+                form.getWorkingExperienceInMonth(),
                 form.getWorkPosition(),
                 form.getSalary(),
                 form.getAdditionalSalary(),

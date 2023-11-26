@@ -17,7 +17,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -63,8 +62,8 @@ public class Form {
     @Column(name = "work_place")
     private String workPlace;
 
-    @Column(name = "working_experience")
-    private Duration workingExperience;
+    @Column(name = "working_experience_in_month")
+    private Integer workingExperienceInMonth;
 
     @Column(name = "work_position")
     private String workPosition;
