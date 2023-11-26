@@ -8,6 +8,8 @@ COPY src/ /react-app/src
 
 COPY package.json /react-app/
 
+COPY tsconfig.json /react-app/
+
 RUN npm install
 
 CMD ["npm", "start"]
