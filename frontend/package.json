@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.18",
+    "@salutejs/client": "^1.32.0",
     "@salutejs/plasma-icons": "^1.171.0",
     "@salutejs/plasma-tokens": "^1.65.0",
     "@salutejs/plasma-ui": "^1.221.0",
