@@ -63,7 +63,10 @@ public class FormController {
             throw new BadParametersException(bindingResult);
         }
 
-        return formService.save(formTransformer.transform(createRequest)).getId();
+        return formService.save(
+                createRequest.getApplicationId(),
+                formTransformer.transform(createRequest)
+        ).getId();
     }
 
     @PostMapping("{id}/bank-account")

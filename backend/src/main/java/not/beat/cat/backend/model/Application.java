@@ -55,6 +55,10 @@ public class Application {
     @Column(name = "update_date")
     private LocalDateTime updateDate;
 
+    public void addForm(Form form) {
+        forms.add(form);
+    }
+
     public void addComment(Comment comment) {
         comments.add(comment);
     }
