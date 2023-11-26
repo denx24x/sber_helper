@@ -3,6 +3,8 @@ package not.beat.cat.backend.controller;
 import jakarta.validation.Valid;
 import not.beat.cat.backend.dto.ApplicationCreateRequest;
 import not.beat.cat.backend.dto.ApplicationTo;
+import not.beat.cat.backend.dto.ApplicationUpdateStatusRequest;
+import not.beat.cat.backend.dto.CommentCreateRequest;
 import not.beat.cat.backend.dto.CommentTo;
 import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.exception.BadParametersException;
@@ -30,6 +32,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/v1/applications")
 public class ApplicationController {
+    private static final String UPDATE_STATUS_COMMENT_TEMPLATE = "Статус заявки изменился на %s.\n";
+
     private final ApplicationService applicationService;
     private final FormService formService;
     private final CommentService commentService;
@@ -101,5 +105,27 @@ public class ApplicationController {
         return commentService.findAllByApplicationId(id).stream()
                 .map(commentTransformer::transform)
                 .toList();
+    }
+
+    @PostMapping("/{id}/update-status")
+    public void updateStatus(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody ApplicationUpdateStatusRequest updateStatusRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new BadParametersException(bindingResult);
+        }
+
+        String commentContent = UPDATE_STATUS_COMMENT_TEMPLATE.formatted(updateStatusRequest.getNewStatus());
+        if (updateStatusRequest.getComment() != null) {
+            commentContent += "\n" + updateStatusRequest.getComment();
+        }
+
+        applicationService.updateStatus(
+                id,
+                updateStatusRequest.getNewStatus(),
+                commentTransformer.transform(new CommentCreateRequest(id, commentContent))
+        );
     }
 }

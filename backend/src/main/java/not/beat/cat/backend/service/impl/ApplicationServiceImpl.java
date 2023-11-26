@@ -5,9 +5,11 @@ import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
 import not.beat.cat.backend.model.Comment;
 import not.beat.cat.backend.repository.ApplicationRepository;
+import not.beat.cat.backend.repository.CommentRepository;
 import not.beat.cat.backend.service.ApplicationService;
 import not.beat.cat.backend.service.CommentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,13 +18,16 @@ import java.util.Set;
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final CommentRepository commentRepository;
     private final CommentService commentService;
 
     public ApplicationServiceImpl(
             ApplicationRepository applicationRepository,
+            CommentRepository commentRepository,
             CommentService commentService
     ) {
         this.applicationRepository = applicationRepository;
+        this.commentRepository = commentRepository;
         this.commentService = commentService;
     }
 
@@ -53,5 +58,18 @@ public class ApplicationServiceImpl implements ApplicationService {
         comment.setApplication(application);
 
         return commentService.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(long id, ApplicationStatus newStatus, Comment comment) {
+        Application application = applicationRepository.findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
+        application.setStatus(newStatus);
+        application.addComment(comment);
+        comment.setApplication(application);
+
+        applicationRepository.save(application);
+        commentRepository.save(comment);
     }
 }

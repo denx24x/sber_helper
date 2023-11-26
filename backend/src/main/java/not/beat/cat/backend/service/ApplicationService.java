@@ -19,4 +19,6 @@ public interface ApplicationService {
     Application save(Application application);
 
     Comment saveComment(long id, Comment transform);
+
+    void updateStatus(long id, ApplicationStatus newStatus, Comment comment);
 }
