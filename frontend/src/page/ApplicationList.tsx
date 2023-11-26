@@ -10,77 +10,11 @@ import {
 import { IconBankCard, IconDevice, IconDownload, IconEvent, IconFolder, IconInfo, IconPersone } from '@salutejs/plasma-icons';
 import ApplicationCard from '../components/ApplicationCard';
 import { Application, Status } from '../model/Application';
-import { Link, useLoaderData, useNavigate } from 'react-router-dom';
+import {  useLoaderData, useNavigate } from 'react-router-dom';
 
 export async function ApplicationsLoader()  : Promise<Application[]> {
-  const applications = [{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },
-  {
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },{
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  },
-  {
-    id: 0,
-    product: "Потребительский кредит",
-    amount: 1000,
-    term_months: 10,
-    interest: 5, 
-    creation_date: new Date(Date.now()),
-    status: Status.NEW
-  }]
-  return applications;
+  return fetch("/v1/applications")
+  .then(response => response.json())
 }
 
 function ApplicationList(props : {}) {
@@ -103,7 +37,7 @@ function ApplicationList(props : {}) {
             }
           </Col>
       ) : (
-        <Spinner />
+        <Spinner style={{alignSelf: "center", marginTop: "10rem"}} />
       )} 
 
       </>

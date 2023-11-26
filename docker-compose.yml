@@ -21,12 +21,6 @@ services:
     expose:
       - 8080
     build: ./backend
-  frontend:
-    depends_on:
-      - backend
-    ports:
-      - '3000:3000'
-    build: ./frontend
 volumes:
   db:
     driver: local

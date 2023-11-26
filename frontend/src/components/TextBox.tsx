@@ -6,6 +6,12 @@ import "./ApplicationCard.css"
 import React from "react"
 import { Application } from "../model/Application"
 import { NavigateFunction, Navigation, redirect, useNavigate, useNavigation } from "react-router-dom"
+import {
+    text, // Цвет текста
+    background, // Цвет подложки
+    gradient,
+    gradientDevice, // Градиент
+} from '@salutejs/plasma-tokens';
 
 export type ApplicationCardProps = {
     application: Application
@@ -20,8 +26,8 @@ function TextBox(props : Props) {
     return (
             <>
                 <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", width:"100%", marginTop: 5}}>
-                    <TextBoxTitle >{props.title}</TextBoxTitle>
-                    <TextBoxTitle >{props.content}</TextBoxTitle>
+                    <TextBoxTitle style={{color: background}}>{props.title}</TextBoxTitle>
+                    <TextBoxTitle style={{color: background}} >{props.content}</TextBoxTitle>
                 </div>
             </>
         )

@@ -36,7 +36,7 @@ function ApplicationCard(props : Props) {
                                 content={
                                     <TextBox>
                                         <TextBoxTitle>{props.application.product}</TextBoxTitle>
-                                        <TextBoxSubTitle>Заявлен {props.application.creation_date.toString()}</TextBoxSubTitle>
+                                        <TextBoxSubTitle>Заявлен {props.application.creationDate.toString()}</TextBoxSubTitle>
                                     </TextBox> as (ReactElement & string)
                                 }
                                 contentRight={<CellDisclosure />}

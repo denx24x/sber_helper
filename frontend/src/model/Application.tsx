@@ -6,8 +6,8 @@ export type Application = {
     id: number,
     product: string,
     amount: number,
-    term_months: number,
+    termMonths: number,
     interest: number, 
-    creation_date: Date,
+    creationDate: Date,
     status: Status
 }
