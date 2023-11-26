@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
+  "proxy": "http://host.docker.internal:8080",
   "dependencies": {
     "@blocknote/core": "^0.9.6",
     "@blocknote/react": "^0.9.6",
