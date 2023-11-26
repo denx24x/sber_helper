@@ -1,18 +1,18 @@
 package not.beat.cat.backend.transformer;
 
-import not.beat.cat.backend.dto.DocumentCreateRequest;
 import not.beat.cat.backend.dto.DocumentTo;
 import not.beat.cat.backend.model.Document;
+import not.beat.cat.backend.model.DocumentType;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DocumentTransformer {
 
-    public Document transform(DocumentCreateRequest createRequest) {
+    public Document transform(DocumentType type, String location) {
         Document document = new Document();
-        document.setType(createRequest.getType());
-        document.setLocation(createRequest.getLocation());
+        document.setType(type);
+        document.setLocation(location);
 
         return document;
     }

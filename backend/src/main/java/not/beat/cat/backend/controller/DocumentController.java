@@ -1,15 +1,14 @@
 package not.beat.cat.backend.controller;
 
-import jakarta.validation.Valid;
-import not.beat.cat.backend.dto.DocumentCreateRequest;
-import not.beat.cat.backend.exception.BadParametersException;
+import not.beat.cat.backend.model.DocumentType;
 import not.beat.cat.backend.service.DocumentService;
 import not.beat.cat.backend.transformer.DocumentTransformer;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -29,23 +28,18 @@ public class DocumentController {
         this.documentTransformer = documentTransformer;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Long save(
-            @Valid @RequestBody DocumentCreateRequest createRequest,
-            BindingResult bindingResult
+            @RequestParam("formId") long formId,
+            @RequestParam("location") String location,
+            @RequestParam("type") DocumentType type,
+            @RequestParam("file") MultipartFile file
     ) {
-        if (bindingResult.hasErrors()) {
-            throw new BadParametersException(bindingResult);
-        }
-
         try {
-            documentService.upload(
-                    Path.of(createRequest.getLocation()),
-                    createRequest.getFile().getBytes()
-            );
+            documentService.upload(Path.of(location).resolve(file.getOriginalFilename()), file.getBytes());
             return documentService.save(
-                    createRequest.getFormId(),
-                    documentTransformer.transform(createRequest)
+                    formId,
+                    documentTransformer.transform(type, location)
             ).getId();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
