@@ -92,30 +92,31 @@ function App(props: {}) {
     }}>
       <TextL color="white">СБЕР помощник</TextL>
     </Headline1>
-    <div style={{ position: "absolute", float: "left", width: "25%", marginTop: "1rem", minHeight: "10rem" }}>
+    <div style={{ position: "absolute", float: "left", width: "22%", marginTop: "1rem", minHeight: "10rem" }}>
+
+
       <Accordion>
         <AccordionSummary style={{ backgroundColor: "rgba(240, 240, 240, .5)", border: '1px solid rgba(0, 0, 0, .125)' }}>
-          <div>Таблица</div>
-          <IconChevronDown color="black" />
+          <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
+            <div>Блокнот</div>
+            <IconChevronDown color="black" />
+          </div>
+
         </AccordionSummary>
         <AccordionDetails>
-          <Spreadsheet data={Array.from(Array(5), () => new Array(3))} />
+          <BlockNoteView editor={editor} />
         </AccordionDetails>
       </Accordion>
 
+      <div style={{ marginTop: 20 }}>
 
-
-      <div style={{ marginTop: 10 }}>
         <Accordion>
           <AccordionSummary style={{ backgroundColor: "rgba(240, 240, 240, .5)", border: '1px solid rgba(0, 0, 0, .125)' }}>
-            <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
-              <div>Блокнот</div>
-              <IconChevronDown color="black" />
-            </div>
-
+            <div>Таблица</div>
+            <IconChevronDown color="black" />
           </AccordionSummary>
           <AccordionDetails>
-            <BlockNoteView editor={editor} />
+            <Spreadsheet data={Array.from(Array(5), () => new Array(3))} />
           </AccordionDetails>
         </Accordion>
       </div>

@@ -1,10 +1,10 @@
-import { Button, Col, DsplL, DsplM, Row, TextBoxLabel, TextBoxSubTitle, TextBoxTitle } from "@salutejs/plasma-ui";
-import React, { ReactNode } from "react";
+import { Button, Col, DsplL, DsplM, Row, TextArea, TextBoxLabel, TextBoxSubTitle, TextBoxTitle } from "@salutejs/plasma-ui";
+import React, { ReactNode, useState } from "react";
 import ApplicationCard from "../components/ApplicationCard";
 import { Application, Status } from "../model/Application";
 import { NavigateFunction, useLoaderData, useNavigate } from "react-router-dom";
 import { JsxElement } from "typescript";
-import { AccordionSummary, Typography, AccordionDetails, Accordion } from "@mui/material";
+import { AccordionSummary, Typography, AccordionDetails, Accordion, TextField } from "@mui/material";
 import TextBox from "../components/TextBox";
 import { IconArrowDown, IconChevronDown } from "@salutejs/plasma-icons";
 import {
@@ -15,6 +15,7 @@ import {
 } from '@salutejs/plasma-tokens';
 import { Form } from "../model/Form";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
+import { METHODS } from "http";
 
 export async function ApplicationLoader(params: any): Promise<Data> {
   return Promise.all([
@@ -40,6 +41,7 @@ type Data = {
 function ApplicationDetails(props: {}) {
   const data = useLoaderData() as Data;
   const navigate: NavigateFunction = useNavigate();
+  const [comment, setComment] = useState("");
 
 
 
@@ -145,10 +147,48 @@ function ApplicationDetails(props: {}) {
             </>
           )
         }
+        <TextArea value={comment} style={{marginTop: "1em"}} placeholder="Ваше решение" onChange={val => {setComment(val.target.value)}}/>
         <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: "1rem"}}>
-          <Button style={{background: "red", width: "100%", marginRight: 10}} title="">Отказать</Button>
-          <Button style={{background: "darkorange", width: "100%", marginLeft: 5, marginRight: 5}} title="">Уточнить данные</Button>
-          <Button style={{background: "green", width: "100%", marginLeft:10}} content="">Согласовать</Button>
+          <Button style={{background: "red", width: "100%", marginRight: 10}} onClick={() => {
+            fetch("/v1/applications/" + data.application.id + "/update-status", {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                newStatus: "FINISHED",
+                comment: comment
+              })
+            }).then(()=>
+            navigate("/"))
+          }
+          } title="">Отказать</Button>
+          <Button style={{background: "darkorange", width: "100%", marginLeft: 5, marginRight: 5}} title="" onClick={() => {
+            fetch("/v1/applications/" + data.application.id + "/update-status", {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                newStatus: "REFINEMENT",
+                comment: comment
+              })
+            }).then(()=>
+            navigate("/"))
+          }} >Уточнить данные</Button>
+          <Button style={{background: "green", width: "100%", marginLeft:10}} content="" onClick={() => {
+            fetch("/v1/applications/" + data.application.id + "/update-status", {
+              method: "post",
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                newStatus: "FINISHED",
+                comment: comment
+              })
+            }).then(()=>
+            navigate("/"))
+          }} >Согласовать</Button>
         </div>
       </Col>
     </>
