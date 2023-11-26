@@ -34,9 +34,10 @@ public class FileDiskRepository implements FileRepository {
     @Override
     public void upload(Path path, byte[] data) {
         try {
-            Path parentFolder = DOCUMENTS_PATH.resolve(path).getParent();
-            Files.createDirectories(parentFolder);
-            Files.write(DOCUMENTS_PATH.resolve(path), data, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+            Path filePath = DOCUMENTS_PATH.resolve(path);
+            Files.createDirectories(filePath.getParent());
+            Files.createFile(filePath);
+            Files.write(filePath, data, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

@@ -36,10 +36,11 @@ public class DocumentController {
             @RequestParam("file") MultipartFile file
     ) {
         try {
-            documentService.upload(Path.of(location).resolve(file.getOriginalFilename()), file.getBytes());
+            Path filePath = Path.of(location).resolve(file.getOriginalFilename());
+            documentService.upload(filePath, file.getBytes());
             return documentService.save(
                     formId,
-                    documentTransformer.transform(type, location)
+                    documentTransformer.transform(type, filePath.toString())
             ).getId();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
