@@ -11,7 +11,7 @@ public interface FormService {
 
     List<Form> findAllByApplicationId(long applicationId);
 
-    Form save(Form form);
+    Form save(long applicationId, Form form);
 
-    BankAccountInfo saveBankAccountInfo(BankAccountInfo bankAccountInfo);
+    BankAccountInfo saveBankAccountInfo(long id, BankAccountInfo bankAccountInfo);
 }

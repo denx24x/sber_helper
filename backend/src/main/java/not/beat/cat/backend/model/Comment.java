@@ -6,33 +6,29 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "bank_accounts")
-public class BankAccountInfo {
+@Table(name = "comments")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bank_account_id")
+    @Column(name = "comment_id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "form_id")
-    private Form form;
+    @ManyToOne
+    @JoinColumn(name = "application_id")
+    private Application application;
 
-    @Column(name = "amount")
-    private BigDecimal amount;
-
-    @Column(name = "category")
-    private String category;
+    @Column(name = "content")
+    private String content;
 
     @CreationTimestamp
     @Column(name = "creation_date")

@@ -4,7 +4,6 @@ import lombok.Data;
 import not.beat.cat.backend.model.MaritalStatus;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,7 +19,7 @@ public class FormTo {
     private final MaritalStatus materialStatus;
     private final Boolean hasChildren;
     private final String workPlace;
-    private final Duration workingExperience;
+    private final Integer workingExperienceInMonth;
     private final String workPosition;
     private final BigDecimal salary;
     private final BigDecimal additionalSalary;

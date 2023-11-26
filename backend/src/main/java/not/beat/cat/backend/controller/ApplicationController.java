@@ -3,14 +3,19 @@ package not.beat.cat.backend.controller;
 import jakarta.validation.Valid;
 import not.beat.cat.backend.dto.ApplicationCreateRequest;
 import not.beat.cat.backend.dto.ApplicationTo;
+import not.beat.cat.backend.dto.ApplicationUpdateStatusRequest;
+import not.beat.cat.backend.dto.CommentCreateRequest;
+import not.beat.cat.backend.dto.CommentTo;
 import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.exception.BadParametersException;
 import not.beat.cat.backend.exception.ResourceNotFoundException;
 import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
 import not.beat.cat.backend.service.ApplicationService;
+import not.beat.cat.backend.service.CommentService;
 import not.beat.cat.backend.service.FormService;
 import not.beat.cat.backend.transformer.ApplicationTransformer;
+import not.beat.cat.backend.transformer.CommentTransformer;
 import not.beat.cat.backend.transformer.FormTransformer;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,21 +32,29 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/v1/applications")
 public class ApplicationController {
+    private static final String UPDATE_STATUS_COMMENT_TEMPLATE = "Статус заявки изменился на %s.\n";
+
     private final ApplicationService applicationService;
     private final FormService formService;
+    private final CommentService commentService;
     private final ApplicationTransformer applicationTransformer;
     private final FormTransformer formTransformer;
+    private final CommentTransformer commentTransformer;
 
     public ApplicationController(
             ApplicationService applicationService,
             FormService formService,
+            CommentService commentService,
             ApplicationTransformer applicationTransformer,
-            FormTransformer formTransformer
+            FormTransformer formTransformer,
+            CommentTransformer commentTransformer
     ) {
         this.applicationService = applicationService;
         this.formService = formService;
+        this.commentService = commentService;
         this.applicationTransformer = applicationTransformer;
         this.formTransformer = formTransformer;
+        this.commentTransformer = commentTransformer;
     }
 
     @GetMapping("/{id}")
@@ -85,5 +98,34 @@ public class ApplicationController {
         return formService.findAllByApplicationId(id).stream()
                 .map(formTransformer::transform)
                 .toList();
+    }
+
+    @GetMapping("/{id}/comments")
+    public List<CommentTo> findComments(@PathVariable("id") Long id) {
+        return commentService.findAllByApplicationId(id).stream()
+                .map(commentTransformer::transform)
+                .toList();
+    }
+
+    @PostMapping("/{id}/update-status")
+    public void updateStatus(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody ApplicationUpdateStatusRequest updateStatusRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new BadParametersException(bindingResult);
+        }
+
+        String commentContent = UPDATE_STATUS_COMMENT_TEMPLATE.formatted(updateStatusRequest.getNewStatus());
+        if (updateStatusRequest.getComment() != null) {
+            commentContent += "\n" + updateStatusRequest.getComment();
+        }
+
+        applicationService.updateStatus(
+                id,
+                updateStatusRequest.getNewStatus(),
+                commentTransformer.transform(new CommentCreateRequest(id, commentContent))
+        );
     }
 }

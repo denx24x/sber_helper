@@ -13,31 +13,6 @@ public class FormTransformer {
         this.bankAccountInfoTransformer = bankAccountInfoTransformer;
     }
 
-    public Form transform(FormTo formTo) {
-        Form form = new Form();
-        form.setId(formTo.getId());
-        form.setFullName(formTo.getFullName());
-        form.setBirthday(formTo.getBirthday());
-        form.setPassportData(formTo.getPassportData());
-        form.setRegistrationAddress(formTo.getRegistrationAddress());
-        form.setResidentialAddress(formTo.getResidentialAddress());
-        form.setMaterialStatus(formTo.getMaterialStatus());
-        form.setHasChildren(formTo.getHasChildren());
-        form.setWorkPlace(formTo.getWorkPlace());
-        form.setWorkingExperience(formTo.getWorkingExperience());
-        form.setWorkPosition(formTo.getWorkPosition());
-        form.setSalary(formTo.getSalary());
-        form.setAdditionalSalary(formTo.getAdditionalSalary());
-        form.setSourceAdditionalSalary(formTo.getSourceAdditionalSalary());
-        form.setBankAccountInfo(bankAccountInfoTransformer.transform(
-                formTo.getBankAccountInfo()
-        ));
-        form.setCreationDate(formTo.getCreationDate());
-        form.setUpdateDate(formTo.getUpdateDate());
-
-        return form;
-    }
-
     public Form transform(FormCreateRequest createRequest) {
         Form form = new Form();
         form.setFullName(createRequest.getFullName());
@@ -48,7 +23,7 @@ public class FormTransformer {
         form.setMaterialStatus(createRequest.getMaterialStatus());
         form.setHasChildren(createRequest.getHasChildren());
         form.setWorkPlace(createRequest.getWorkPlace());
-        form.setWorkingExperience(createRequest.getWorkingExperience());
+        form.setWorkingExperienceInMonth(createRequest.getWorkingExperienceInMonths());
         form.setWorkPosition(createRequest.getWorkPosition());
         form.setSalary(createRequest.getSalary());
         form.setAdditionalSalary(createRequest.getAdditionalSalary());
@@ -69,12 +44,14 @@ public class FormTransformer {
                 form.getMaterialStatus(),
                 form.isHasChildren(),
                 form.getWorkPlace(),
-                form.getWorkingExperience(),
+                form.getWorkingExperienceInMonth(),
                 form.getWorkPosition(),
                 form.getSalary(),
                 form.getAdditionalSalary(),
                 form.getSourceAdditionalSalary(),
-                bankAccountInfoTransformer.transform(form.getBankAccountInfo()),
+                form.getBankAccountInfo() == null
+                        ? null
+                        : bankAccountInfoTransformer.transform(form.getBankAccountInfo()),
                 form.getCreationDate(),
                 form.getUpdateDate()
         );

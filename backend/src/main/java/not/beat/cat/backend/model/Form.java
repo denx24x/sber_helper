@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,7 +18,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,11 +27,11 @@ import java.util.List;
 @Table(name = "forms")
 public class Form {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "form_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_id")
     private Application application;
 
@@ -63,8 +63,8 @@ public class Form {
     @Column(name = "work_place")
     private String workPlace;
 
-    @Column(name = "working_experience")
-    private Duration workingExperience;
+    @Column(name = "working_experience_in_month")
+    private Integer workingExperienceInMonth;
 
     @Column(name = "work_position")
     private String workPosition;

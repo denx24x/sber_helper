@@ -1,10 +1,8 @@
 package not.beat.cat.backend.service;
 
-import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.model.Application;
 import not.beat.cat.backend.model.ApplicationStatus;
-import not.beat.cat.backend.model.Form;
-import not.beat.cat.backend.transformer.ApplicationTransformer;
+import not.beat.cat.backend.model.Comment;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +17,8 @@ public interface ApplicationService {
     List<Application> findAllByStatuses(Set<ApplicationStatus> statuses);
 
     Application save(Application application);
+
+    Comment saveComment(long id, Comment transform);
+
+    void updateStatus(long id, ApplicationStatus newStatus, Comment comment);
 }

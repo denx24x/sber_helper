@@ -63,7 +63,10 @@ public class FormController {
             throw new BadParametersException(bindingResult);
         }
 
-        return formService.save(formTransformer.transform(createRequest)).getId();
+        return formService.save(
+                createRequest.getApplicationId(),
+                formTransformer.transform(createRequest)
+        ).getId();
     }
 
     @PostMapping("{id}/bank-account")
@@ -75,7 +78,10 @@ public class FormController {
             throw new BadParametersException(bindingResult);
         }
 
-        return formService.saveBankAccountInfo(bankAccountInfoTransformer.transform(createRequest)).getId();
+        return formService.saveBankAccountInfo(
+                createRequest.getFormId(),
+                bankAccountInfoTransformer.transform(createRequest)
+        ).getId();
     }
 
     @GetMapping("/{id}/documents")
