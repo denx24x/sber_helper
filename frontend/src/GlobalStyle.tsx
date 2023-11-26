@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { lightSber } from '@salutejs/plasma-tokens/themes'; // Или один из списка: darkEva, darkJoy, lightEva, lightJoy, lightSber
+import { darkSber } from '@salutejs/plasma-tokens/themes'; // Или один из списка: darkEva, darkJoy, lightEva, lightJoy, lightSber
 import {
     text, // Цвет текста
     background, // Цвет подложки
@@ -16,7 +16,7 @@ const DocumentStyle = createGlobalStyle`
         background-image: ${gradient};
     }
 `;
-const ThemeStyle = createGlobalStyle(lightSber);
+const ThemeStyle = createGlobalStyle(darkSber);
 export const GlobalStyle = () => (
     <>
         <DocumentStyle />
