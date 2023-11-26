@@ -1,10 +1,10 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
 import ApplicationList, { ApplicationsLoader } from "./page/ApplicationList";
 import { Container, Headline1, TextArea, TextL } from "@salutejs/plasma-ui";
 import { voicePhraseGradient } from "@salutejs/plasma-tokens";
 import ApplicationDetails, { ApplicationLoader } from "./page/ApplicationDetails";
 import { AssistantAppState, AssistantClient, AssistantClientCustomizedCommand, AssistantSmartAppData, createAssistant, createSmartappDebugger } from '@salutejs/client';
-import { Dispatch } from "react";
+import { Dispatch, useRef, useState } from "react";
 import React from "react";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
@@ -57,27 +57,60 @@ const initialize = (getState: any, getRecoveryState: any): any => {
 
 
 const assistant = initialize(() => { return { tag: "123" } }, () => { return { tag: "123" } });
-assistant.on('data', (command: any) => {
-  console.log(command);
-  if (command.navigation) {
-    switch (command.navigation.command) {
-      case 'UP':
-        window.scrollTo(0, 0);
-        break;
-      case 'DOWN':
-        window.scrollTo(0, 1000);
-        break;
-    }
-  }
-});
+
 
 function App(props: {}) {
+  const editorRef = useRef(null)
+  const scrollToEditor = () => {
+      if(editorRef != null && editorRef.current != null){
+        (editorRef.current as any).scrollIntoView();
+      }
+  }
+
+  const tableRef = useRef(null)
+  const scrollToTable = () => {
+      if(tableRef != null && tableRef.current != null){
+        (tableRef.current as any).scrollIntoView();
+      }
+  }
+      
+  const [editorExpanded, expandEditor] = useState(false);
+  const [tableExpanded, expandTable] = useState(false);
   const editor = useBlockNote({
     onEditorContentChange: (editor: any) => {
       // Log the document to console on every update
       //console.log(editor.getJSON());
     },
+    
   });
+
+  assistant.on('data', (command: any) => {
+  console.log(command);
+  if(command){
+  if (command.action) {
+    switch (command.action.type) {
+      case 'add_note':
+        console.log("add_note")
+        expandEditor(true);
+        scrollToEditor();
+        editor.insertBlocks([
+          {
+            content:command.action.note,
+            type: "paragraph"
+          }
+        ],editor.getTextCursorPosition().block,
+        'after')
+  
+        break;
+      case 'add_table':
+        console.log("add_table");
+        expandTable(true);
+        scrollToTable();
+        break;
+    }
+  }
+}
+});
 
   return <>
     <Headline1 style={{
@@ -90,27 +123,28 @@ function App(props: {}) {
       opacity: 1,
       backgroundImage: voicePhraseGradient
     }}>
-      <TextL color="white">СБЕР помощник</TextL>
+
+    <TextL color="white" onClick={() => router.navigate("/")}>СБЕР помощник</TextL>
     </Headline1>
-    <div style={{ position: "absolute", float: "left", width: "22%", marginTop: "1rem", minHeight: "10rem" }}>
+    <div style={{ position: "absolute", float: "left", width: "22%", marginTop: "1rem" }}>
 
 
-      <Accordion>
+      <Accordion ref={editorRef} expanded={editorExpanded} onChange={(event) => expandEditor(!editorExpanded)} >
         <AccordionSummary style={{ backgroundColor: "rgba(240, 240, 240, .5)", border: '1px solid rgba(0, 0, 0, .125)' }}>
           <div style={{ display: "flex", justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
             <div>Блокнот</div>
             <IconChevronDown color="black" />
           </div>
-
+          
         </AccordionSummary>
         <AccordionDetails>
-          <BlockNoteView editor={editor} />
+          <BlockNoteView  editor={editor} />
         </AccordionDetails>
       </Accordion>
 
       <div style={{ marginTop: 20 }}>
 
-        <Accordion>
+        <Accordion ref={tableRef} expanded={tableExpanded} onChange={(event) => expandTable(!tableExpanded)}>
           <AccordionSummary style={{ backgroundColor: "rgba(240, 240, 240, .5)", border: '1px solid rgba(0, 0, 0, .125)' }}>
             <div>Таблица</div>
             <IconChevronDown color="black" />
@@ -121,11 +155,15 @@ function App(props: {}) {
         </Accordion>
       </div>
     </div>
-
-    <Container>
+    
+    <Container  >
       <RouterProvider router={router} />
     </Container>
-    <TextArea style={{ opacity: 0 }}></TextArea>
+    <TextArea readOnly style={{ opacity: 0 }}></TextArea>
   </>
 }
 export default App;
+
+function userState(arg0: boolean): [any, any] {
+  throw new Error("Function not implemented.");
+}

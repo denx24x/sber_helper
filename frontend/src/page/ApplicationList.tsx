@@ -25,8 +25,8 @@ function ApplicationList(props : {}) {
       <>
       {applications.length? (
           <Col style={{
-            alignSelf: 'center',
-            width: "50%"
+            width: "50%",
+            alignSelf: "center"
           }}>
             {
               applications.map((application : Application) => 
