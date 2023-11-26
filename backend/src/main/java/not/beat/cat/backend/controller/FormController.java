@@ -7,6 +7,8 @@ import not.beat.cat.backend.dto.FormCreateRequest;
 import not.beat.cat.backend.dto.FormTo;
 import not.beat.cat.backend.exception.BadParametersException;
 import not.beat.cat.backend.exception.ResourceNotFoundException;
+import not.beat.cat.backend.model.Document;
+import not.beat.cat.backend.model.DocumentType;
 import not.beat.cat.backend.model.Form;
 import not.beat.cat.backend.service.DocumentService;
 import not.beat.cat.backend.service.FormService;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -70,7 +73,7 @@ public class FormController {
     }
 
     @PostMapping("{id}/bank-account")
-    public Long save(
+    public Long saveBankAccountInfo(
             @Valid @RequestBody BankAccountInfoCreateRequest createRequest,
             BindingResult bindingResult
     ) {
@@ -87,7 +90,24 @@ public class FormController {
     @GetMapping("/{id}/documents")
     public List<DocumentTo> findDocumentsById(@PathVariable("id") Long id) {
         return documentService.findAllByFormId(id).stream()
-                .map(documentTransformer::transform)
+                .map(doc -> documentTransformer.transform(
+                        doc,
+                        documentService.load(id)
+                ))
                 .toList();
+    }
+
+    @GetMapping("/{id}/documents/type")
+    public DocumentTo findDocumentByType(
+            @PathVariable("id") Long id,
+            @RequestParam("documentType") DocumentType documentType
+    ) {
+        Document document = documentService.findByType(id, documentType)
+                .orElseThrow(ResourceNotFoundException::new);
+
+        return documentTransformer.transform(
+                document,
+                documentService.load(document.getId())
+        );
     }
 }

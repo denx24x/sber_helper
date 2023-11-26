@@ -1,16 +1,19 @@
 package not.beat.cat.backend.controller;
 
-import not.beat.cat.backend.dto.DocumentTo;
-import not.beat.cat.backend.exception.ResourceNotFoundException;
-import not.beat.cat.backend.model.Document;
+import jakarta.validation.Valid;
+import not.beat.cat.backend.dto.DocumentCreateRequest;
+import not.beat.cat.backend.exception.BadParametersException;
 import not.beat.cat.backend.service.DocumentService;
 import not.beat.cat.backend.transformer.DocumentTransformer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/v1/documents")
@@ -26,18 +29,26 @@ public class DocumentController {
         this.documentTransformer = documentTransformer;
     }
 
-    @GetMapping
-    public DocumentTo findById(@PathVariable("id") Long id) {
-        Document document = documentService.findById(id)
-                .orElseThrow(ResourceNotFoundException::new);
-
-        return documentTransformer.transform(document);
-    }
-
     @PostMapping
-    public Long save(@RequestBody DocumentTo documentTo) {
-        return documentService.save(documentTransformer.transform(
-                documentTo
-        )).getId();
+    public Long save(
+            @Valid @RequestBody DocumentCreateRequest createRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new BadParametersException(bindingResult);
+        }
+
+        try {
+            documentService.upload(
+                    Path.of(createRequest.getLocation()),
+                    createRequest.getFile().getBytes()
+            );
+            return documentService.save(
+                    createRequest.getFormId(),
+                    documentTransformer.transform(createRequest)
+            ).getId();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 }

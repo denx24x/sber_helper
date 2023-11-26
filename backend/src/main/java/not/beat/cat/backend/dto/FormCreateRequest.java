@@ -13,8 +13,7 @@ import java.time.LocalDate;
 
 @Data
 public class FormCreateRequest {
-    @NotNull
-    private final Long applicationId;
+    private final long applicationId;
 
     @NotBlank
     private final String fullName;
