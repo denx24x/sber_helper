@@ -41,7 +41,7 @@ const initialize = (getState: any, getRecoveryState: any): any => {
       // Необязательные параметры панели, имитирующей панель на реальном устройстве
       nativePanel: {
         // Стартовый текст в поле ввода пользовательского запроса
-        defaultText: '123',
+        defaultText: 'Введите запрос',
         // Позволяет включить вид панели, максимально приближенный к панели на реальном устройстве
         screenshotMode: false,
         // Атрибут `tabindex` поля ввода пользовательского запроса
@@ -56,7 +56,7 @@ const initialize = (getState: any, getRecoveryState: any): any => {
 
 
 
-const assistant = initialize(() => { return { tag: "123" } }, () => { return { tag: "123" } });
+const assistant = initialize(() => { return { tag: "" } }, () => { return { tag: "" } });
 
 
 function App(props: {}) {
